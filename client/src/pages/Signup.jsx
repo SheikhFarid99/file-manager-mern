@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom'
 
@@ -49,6 +49,33 @@ const Signup = () => {
     console.log(otpData)
   }
 
+  useEffect(() => {
+    if (res) {
+      const inputs = document.querySelectorAll('.otp_field')
+      inputs.forEach((input, index1) => {
+        input.addEventListener('keyup', (e) => {
+          const currentInput = input
+          let nextInput = input.nextElementSibling
+          let preInput = input.previousElementSibling
+
+          if (currentInput.value.length > 1) {
+            currentInput.value = ""
+            return
+          }
+          if (nextInput && nextInput.hasAttribute('disabled') && currentInput.value !== "") {
+            nextInput.removeAttribute('disabled')
+            nextInput.focus();
+          }
+
+          if (!inputs[3].disabled && inputs[3].value !== "") {
+            return
+          }
+        })
+
+      })
+    }
+  }, [res])
+
 
   return (
     <div className='w-screen h-screen bg-slate-200 flex justify-center items-center'>
@@ -65,10 +92,10 @@ const Signup = () => {
                 <form onSubmit={otp_submit} className='mt-4'>
                   <div className='w-full flex flex-col gap-y-2'>
                     <div className='w-full grid grid-cols-4 gap-x-3'>
-                      <input onChange={otpInputHandle} value={otpData.number1} required name='number1' className='input-field' type="text" />
-                      <input required onChange={otpInputHandle} value={otpData.number2} name='number2' className='input-field' type="text" />
-                      <input required onChange={otpInputHandle} value={otpData.number3} name='number3' className='input-field' type="text" />
-                      <input required onChange={otpInputHandle} value={otpData.number4} name='number4' className='input-field' type="text" />
+                      <input onChange={otpInputHandle} value={otpData.number1} required name='number1' className='input-field otp_field' type="text" />
+                      <input disabled required onChange={otpInputHandle} value={otpData.number2} name='number2' className='input-field otp_field' type="text" />
+                      <input disabled required onChange={otpInputHandle} value={otpData.number3} name='number3' className='input-field otp_field' type="text" />
+                      <input disabled required onChange={otpInputHandle} value={otpData.number4} name='number4' className='input-field otp_field' type="text" />
                     </div>
                     <button className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>Submit</button>
                   </div>
