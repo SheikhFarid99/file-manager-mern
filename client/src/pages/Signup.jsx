@@ -45,6 +45,7 @@ const Signup = () => {
       setRes(true)
     } catch (error) {
       set_submit_res(false)
+      console.log(error.response)
     }
   }
 
