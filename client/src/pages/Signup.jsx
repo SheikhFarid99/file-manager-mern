@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { base_api_url } from '../config/config'
 
 const Signup = () => {
 
@@ -34,11 +36,13 @@ const Signup = () => {
   const [submit_res, set_submit_res] = useState(false)
   const [res, setRes] = useState(false)
 
-  const submit_form = (e) => {
+  const submit_form = async (e) => {
     e.preventDefault()
     try {
-      setRes(true)
       set_submit_res(true)
+      const { data } = await axios.post(`${base_api_url}/api/file-manager/signup`, state)
+      set_submit_res(false)
+      setRes(true)
     } catch (error) {
       set_submit_res(false)
     }
@@ -113,7 +117,7 @@ const Signup = () => {
                   <label htmlFor="password">Password</label>
                   <input required onChange={inputHandle} value={state.password} type="password" name='password' placeholder='password' id='password' className='input-field' />
                 </div>
-                <button className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>Sign up</button>
+                <button className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>{submit_res ? "Loading..." : 'Sign up'}</button>
               </form>
             }
 
