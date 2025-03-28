@@ -3,6 +3,7 @@ import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { base_api_url } from '../config/config'
+import toast from 'react-hot-toast'
 
 const Signup = () => {
 
@@ -35,6 +36,7 @@ const Signup = () => {
 
   const [submit_res, set_submit_res] = useState(false)
   const [res, setRes] = useState(false)
+  const [otpRes, setOtpRes] = useState(false)
 
   const submit_form = async (e) => {
     e.preventDefault()
@@ -43,15 +45,28 @@ const Signup = () => {
       const { data } = await axios.post(`${base_api_url}/api/file-manager/signup`, state)
       set_submit_res(false)
       setRes(true)
+      toast.success(data.message)
     } catch (error) {
       set_submit_res(false)
-      console.log(error.response)
+      toast.error(error?.response?.data?.message)
     }
   }
 
-  const otp_submit = (e) => {
+  const otp_submit = async (e) => {
     e.preventDefault()
-    console.log(otpData)
+    let otp = `${otpData?.number1}${otpData?.number2}${otpData?.number3}${otpData?.number4}`
+    try {
+      setOtpRes(true)
+      const { data } = await axios.post(`${base_api_url}/api/file-manager/otp/verify`, {
+        otp: parseInt(otp),
+        email: state.email
+      })
+      console.log(data)
+      setOtpRes(false)
+    } catch (error) {
+      setOtpRes(false)
+      toast.error(error?.response?.data?.message)
+    }
   }
 
   useEffect(() => {
@@ -102,7 +117,7 @@ const Signup = () => {
                       <input disabled required onChange={otpInputHandle} value={otpData.number3} name='number3' className='input-field otp_field' type="text" />
                       <input disabled required onChange={otpInputHandle} value={otpData.number4} name='number4' className='input-field otp_field' type="text" />
                     </div>
-                    <button className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>Submit</button>
+                    <button disabled={otpRes} className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>{otpRes ? 'Loading...' : 'Submit'}</button>
                   </div>
                 </form>
               </> : <form onSubmit={submit_form} className='pt-4' >
@@ -118,7 +133,7 @@ const Signup = () => {
                   <label htmlFor="password">Password</label>
                   <input required onChange={inputHandle} value={state.password} type="password" name='password' placeholder='password' id='password' className='input-field' />
                 </div>
-                <button className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>{submit_res ? "Loading..." : 'Sign up'}</button>
+                <button disabled={submit_res} className='w-full text-white px-3 py-2 rounded-[4px] outline-none bg-blue-500 mt-3 cursor-pointer hover:shadow-lg hover:bg-blue-600'>{submit_res ? "Loading..." : 'Sign up'}</button>
               </form>
             }
 

@@ -13,7 +13,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    min: 6
+    min: 6,
+    select: false
   },
   user_path: {
     type: String,
