@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Logo from '../assets/images/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { base_api_url } from '../config/config'
 import toast from 'react-hot-toast'
+import useAuthContext from '../context/UseAuthContext'
+import { decode_token } from '../utils/decodeToken'
 
 const Signup = () => {
+
+  const { store, dispatch } = useAuthContext()
+  const navigate = useNavigate()
 
   const [state, setState] = useState({
     name: '',
@@ -61,8 +66,16 @@ const Signup = () => {
         otp: parseInt(otp),
         email: state.email
       })
-      console.log(data)
+      localStorage.setItem('auth-token', data.token)
+      dispatch({
+        type: 'signup-success',
+        payload: {
+          user: decode_token(data.token),
+          token: data.token
+        }
+      })
       setOtpRes(false)
+      navigate('/')
     } catch (error) {
       setOtpRes(false)
       toast.error(error?.response?.data?.message)

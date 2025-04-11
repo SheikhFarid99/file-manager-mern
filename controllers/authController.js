@@ -83,6 +83,8 @@ class authController {
         </div>`
             }
 
+            console.log(otpInfo)
+
             try {
                 //await transporter.sendMail(mailOptions)
             } catch (error) {
