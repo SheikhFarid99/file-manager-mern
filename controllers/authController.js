@@ -67,7 +67,7 @@ class authController {
                 }
             }
 
-            const transporter = nodemailer.createTransport(configOptions)
+            // const transporter = nodemailer.createTransport(configOptions)
 
             const mailOptions = {
                 from: process.env.user_email,

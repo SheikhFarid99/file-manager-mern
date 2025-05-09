@@ -18,6 +18,7 @@ app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/api/file-manager', require('./routes/authRoute'))
+app.use('/api/file-manager', require('./routes/fileRoutes'))
 
 const db_connect = async () => {
   try {
