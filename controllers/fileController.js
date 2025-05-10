@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require('uuid')
 const moment = require('moment')
 
 class fileController {
+
     main_path = ''
     constructor() {
         this.main_path = __dirname + '/../files'
@@ -27,14 +28,14 @@ class fileController {
 
             if (stats.isFile()) {
 
-                folderData.push({
-                    id: uuidv4(),
-                    name: item,
-                    type: 'file',
-                    path: distpath,
-                    modified: moment(stats.birthtime).format('LLL'),
-                    
-                })
+                // folderData.push({
+                //     id: uuidv4(),
+                //     name: item,
+                //     type: 'file',
+                //     path: distpath,
+                //     modified: moment(stats.birthtime).format('LLL'),
+
+                // })
 
             } else if (stats.isDirectory()) {
 
@@ -60,10 +61,12 @@ class fileController {
         const dist = this.main_path + '/' + user_path
 
         try {
-            const {folderData} = await this.get_files(dist, "", "", user_path)
-            console.log(folderData)
+            const { folderData } = await this.get_files(dist, "", "", user_path)
+            // console.log(folderData)
+            return res.status(200).json({ folderData })
         } catch (error) {
             console.log(error.message)
+             return res.status(500).json({ message : "Internal server error" })
         }
     }
 }
