@@ -27,3 +27,25 @@
   color: #565657 !important;
   opacity: 1;
 }
+
+input.checkbox {
+  position: relative;
+  cursor: pointer;
+  width: 1.150rem;
+  height: 1.150rem;
+  vertical-align: top;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #d8d6de;
+  appearance: none;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+input.checkbox:checked {
+  background-image: url("http://localhost:5173/check.png");
+  background-color: #fff;
+  border-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(115, 103, 240, 0.4);
+  background-size: 90%;
+}

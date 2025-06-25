@@ -49,7 +49,7 @@ const Sidebar = ({
             className='overflow-hidden transition-all duration-500'>
             <div className={`h-[40px] absolute hover:bg-slate-200 w-full left-0 ${element === path ? 'bg-blue-500' : ''}`}></div>
             <li className='flex w-full justify-center items-center relative h-full'>
-                <div className={` ${element === path ? 'text-white' : 'text-black'} font-normal ${items?.length > 0 ? 'pl-[12px]' : 'pl-[30px]'} pr-[8px] flex justify-start items-center gap-[8px] w-full cursor-pointer relative  `} >
+                <div className={` ${element === path ? 'text-white' : 'text-black'} font-normal ${items?.length > 0 ? 'pl-[12px]' : 'pl-[30px]'} pr-[8px] py-[8px] flex justify-start items-center gap-[8px] w-full cursor-pointer relative  `} >
                     {
                         items?.length > 0 && <div className={`${elementIds.includes(id) ? 'rotate-90' : 'rotate-0'} absolute `}>
                             <span onClick={() => toggleFolder(id)} className='text-xs'><IoIosArrowForward /></span>
