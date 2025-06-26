@@ -13,6 +13,7 @@ import { TbCut } from 'react-icons/tb'
 import { GoPaste } from 'react-icons/go'
 import { FcOpenedFolder } from 'react-icons/fc'
 import { IoIosArrowForward } from "react-icons/io";
+import Loader from '../components/Loader'
 
 const Home = () => {
 
@@ -56,6 +57,24 @@ const Home = () => {
       getFiles()
     }
   }, [])
+
+  const [loader, setLoader] = useState(true)
+  const [files, setFIles] = useState([])
+
+  const getFile = async (dist) => {
+    try {
+      const { data } = await axios.get(`${base_api_url}/api/file-manager/list?file_path=${dist}`, config)
+      setFIles(data.folderData)
+      setLoader(false)
+    } catch (error) {
+      console.log(error)
+      setLoader(false)
+    }
+  }
+
+  useEffect(() => {
+    getFile(path)
+  }, [path])
 
   console.log(path)
 
@@ -213,6 +232,13 @@ const Home = () => {
 
 
               </div>
+
+              <div className='w-full h-[calc(100%-80px)] flex justify-start items-start overflow-y-scroll flex-col relative'>
+                {
+                  loader && <Loader />
+                }
+              </div>
+
             </div>
 
           </div>
