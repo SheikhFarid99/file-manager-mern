@@ -99,7 +99,7 @@ class fileController {
         try {
             const {
                 folderData
-            } = await this.get_files(dist, "", "", user_path)
+            } = await this.get_files(dist, "lists", "folder", user_path)
             // console.log(folderData)
             return res.status(200).json({
                 folderData

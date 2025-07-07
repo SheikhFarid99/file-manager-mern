@@ -14,6 +14,7 @@ import { GoPaste } from 'react-icons/go'
 import { FcOpenedFolder } from 'react-icons/fc'
 import { IoIosArrowForward } from "react-icons/io";
 import Loader from '../components/Loader'
+import ReturnFileType from '../components/ReturnFileType'
 
 const Home = () => {
 
@@ -236,6 +237,27 @@ const Home = () => {
               <div className='w-full h-[calc(100%-80px)] flex justify-start items-start overflow-y-scroll flex-col relative'>
                 {
                   loader && <Loader />
+                }
+                {
+                  files && files.length > 0 ? <div className={`w-full grid ${viewType === 'list' ? 'grid-cols-1' : 'grid-cols-7 gap-3 p-3'}`}>
+                    {
+                      files.map((f, i) => <ReturnFileType
+                        user_path={store?.user?.user_path}
+                        viewType={viewType}
+                        key={i}
+                        selectItem={selectItem}
+                        setSelectItem={setSelectItem}
+                        setPath={setPath}
+                        setElement={setElement}
+                        item={f}
+
+                      />)
+                    }
+                  </div> :
+                    <div className='flex justify-center items-center flex-col h-full w-full rounded-md text-black cursor-pointer'>
+                      <span className='text-5xl'><FcOpenedFolder /></span>
+                      <span className='text-center text-sm'>This folder is empty</span>
+                    </div>
                 }
               </div>
 
