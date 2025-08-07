@@ -33,8 +33,6 @@ const Signin = () => {
     try {
       setLoader(true)
       const { data } = await axios.post(`${base_api_url}/api/file-manager/signin`, state)
-
-      localStorage.setItem('file_access_token', data.token || "")
       localStorage.setItem('auth-token', data.token)
       dispatch({
         type: 'signin-success',

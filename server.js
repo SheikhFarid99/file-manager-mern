@@ -4,7 +4,7 @@ const dotEnv = require('dotenv')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
-
+const path = require('path')
 dotEnv.config()
 
 
@@ -19,6 +19,8 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => res.send('Hello World!'))
 app.use('/api/file-manager', require('./routes/authRoute'))
 app.use('/api/file-manager', require('./routes/fileRoutes'))
+
+app.use('/files', express.static(path.join(__dirname, "/files")))
 
 const db_connect = async () => {
   try {

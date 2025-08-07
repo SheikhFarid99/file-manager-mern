@@ -3,8 +3,15 @@ const authContextReducer = (state, action) => {
   if (type === 'signup-success' || 'signin-success') {
     return {
       ...state,
-      user: payload.user || "",
-      token: payload.token || ""
+      user: payload?.user || "",
+      token: payload?.token || ""
+    }
+  }
+  if (type === 'logout') {
+    return {
+      ...state,
+      user: "",
+      token: ""
     }
   }
   return state
